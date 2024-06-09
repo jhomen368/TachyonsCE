@@ -9,7 +9,10 @@ Look for the official fully improved version coming to Steam here: https://store
 
 Please note: This build of the game is now far behind the latest version of the game. Tachyons has integrated most of the features added of CE into the base game.
 =======
-![Tachyons CE latest version](https://img.shields.io/badge/dynamic/json.svg?label=Latest%20version:&url=https://api.github.com/repos/Dav-Edward/TachyonsCE/releases/latest&query=$.name&style=for-the-badge)
+![Tachyons CE latest version](https://img.shields.io/badge/dynamic/json.svg?label=Latest%20version:&url=https://api.github.com/repos/jhomen368/TachyonsCE/releases/latest&query=$.name&style=for-the-badge)
+
+Build 1.0.3
+Update Tachyon CE to match upstream Tachyons a0835 at https://spektor.itch.io/tachyon
 
 Build 1.0.2
 Created Windows-Friendly launcher for the game and included JRE to make playing experience easier for Windows users.
