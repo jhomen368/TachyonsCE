@@ -7,7 +7,6 @@ https://spektor.itch.io/tachyon
 
 Look for the official fully improved version coming to Steam here: https://store.steampowered.com/app/1350310/Tachyons_Battles_Across_the_Galaxy
 
-Please note: This build of the game is now far behind the latest version of the game. Tachyons has integrated most of the features added of CE into the base game.
 =======
 ![Tachyons CE latest version](https://img.shields.io/badge/dynamic/json.svg?label=Latest%20version:&url=https://api.github.com/repos/jhomen368/TachyonsCE/releases/latest&query=$.name&style=for-the-badge)
 
