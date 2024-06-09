@@ -1,0 +1,10 @@
+name=HSECURITY
+sprite=HUMAN
+health=3000
+oxygen=2200
+no_oxygen_damage=25
+oxygen_consum_speed=4
+weapon=Plasma pistol
+repair_power = 1
+fireman_power = 1
+shade=20:100:10

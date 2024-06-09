@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+	<event type="SPAWN_NPC" name="SPAWN_SEA_HR">
+		<condition type="CHANCE" percent="20"/>
+		<spawn_npc>
+            <npc_param npc_dialogue="HR_AGENT"/>
+            <npc_param npc_remote_dialogue="HR_AGENT"/>
+            <npc_param npc_is_crew="1"/>
+			<npc_param npc_random_name="1"/>
+            <npc_param npc_race="HUMAN"/>
+            <npc_param npc_home_system="SENSORS"/>
+            <npc_param npc_spawn_at_home="1"/>
+            <npc_ai type="NPC_LIFESUPPORT" heal_at_percent="90" oxygen_at_percent="80"/>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_WORKER" SYSTEMS="SENSORS" WORK_TIME="21"/>
+        </spawn_npc>
+	</event>
+	
+	<event type="MODIFY_MOB" name="TAKE_SCRAP_FOR_SEA">
+		<event_param take_scrap="VAR([SECTOR]_SEA_PRICE)"/>
+	</event>
+	
+	<event type="SPAWN_NPC" name="SPAWN_SEA_REPAIR">
+		<event_param for_ship_name="VAR([PLAYER_NAME]_input_ship_name)"/>
+		<spawn_npc>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_random_name="1"/>
+			<npc_param npc_race="CYBORG"/>
+			<npc_param npc_home_system="MEDICAL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_ai type="NPC_LIFESUPPORT"/>
+			<npc_ai type="NPC_FIREMAN"/>
+			<npc_ai type="NPC_REPAIRMAN"/>
+			<npc_ai type="NPC_WORKER" WORK_TIME="29"/>
+		</spawn_npc>
+	</event>
+	<event type="SPAWN_NPC" name="SPAWN_SEA_ENGINEER">
+		<event_param for_ship_name="VAR([PLAYER_NAME]_input_ship_name)"/>
+		<spawn_npc>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_random_name="1"/>
+			<npc_param npc_race="HUMAN"/>
+			<npc_param npc_home_system="MEDICAL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_ai type="NPC_LIFESUPPORT"/>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_FIREMAN"/>
+			<npc_ai type="NPC_REPAIRMAN"/>
+			<npc_ai type="NPC_WORKER" WORK_TIME="19"/>
+		</spawn_npc>
+	</event>
+	<event type="SPAWN_NPC" name="SPAWN_SEA_SECURITY">
+		<event_param for_ship_name="VAR([PLAYER_NAME]_input_ship_name)"/>
+		<spawn_npc>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_random_name="1"/>
+			<npc_param npc_race="HSECURITY"/>
+			<npc_param npc_home_system="MEDICAL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_ai type="NPC_LIFESUPPORT"/>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_WORKER" WORK_TIME="26"/>
+		</spawn_npc>
+	</event>
+	<event type="SPAWN_NPC" name="SPAWN_SEA_BOARDER">
+		<event_param chain_events_to_created="1"/>
+		<event_param chain_event="GIVE_RANDOM_GUN"/>
+		<event_param chain_event="GIVE_RANDOM_GUN2"/>
+		<event_param for_ship_name="VAR([PLAYER_NAME]_input_ship_name)"/>
+		<spawn_npc>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_random_name="1"/>
+			<npc_param npc_race="HBOARDER"/>
+			<npc_param npc_home_system="MEDICAL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_ai type="NPC_LIFESUPPORT"/>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_BOARDER" attack_unowned="0"/>
+			<npc_ai type="NPC_WORKER" SYSTEMS="TELEPORT" WORK_TIME="26">
+				<npc_ai_condition type="MOB_HEALTH_PRESENT">
+					<condition_param qty="100"/>
+					<condition_param percent="1"/>
+				</npc_ai_condition>
+			</npc_ai>
+			<npc_ai type="NPC_WORKER" SYSTEMS="MEDICAL" WORK_TIME="7">
+				<npc_ai_condition type="MOB_HEALTH_ABSENT">
+					<condition_param qty="100"/>
+					<condition_param percent="1"/>
+				</npc_ai_condition>
+			</npc_ai>
+		</spawn_npc>
+	</event>
+	<event type="SPAWN_NPC" name="SPAWN_SEA_CAPTAIN">
+		<event_param for_ship_name="VAR([PLAYER_NAME]_input_ship_name)"/>
+		<spawn_npc>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_name="Captain "/>
+			<npc_param npc_random_name="1"/>
+			<npc_param npc_race="HCAPTAIN"/>
+			<npc_param npc_home_system="MEDICAL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_param npc_dialogue="NPC_CAPTAIN"/>
+			<npc_param npc_remote_dialogue="NPC_CAPTAIN"/>
+			<npc_ai type="NPC_LIFESUPPORT">
+				<npc_ai_param heal_at_percent="85"/>
+				<npc_ai_param oxygen_at_percent="70"/>
+			</npc_ai>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_WORKER" SYSTEMS="PILOTING:WEAPONS_CONTROL" WORK_TIME="23"/>
+		</spawn_npc>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_REPAIR">
+		<event_param chain_event="SELECT_SEA_REPAIR_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="REPAIR"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_REPAIR_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SEA_REPAIR_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_ENGINEER">
+		<event_param chain_event="SELECT_SEA_ENGINEER_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="ENGINEER"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_ENGINEER_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SEA_ENGINEER_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_SECURITY">
+		<event_param chain_event="SELECT_SEA_SECURITY_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="SECURITY"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_SECURITY_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SEA_SECURITY_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_BOARDER">
+		<event_param chain_event="SELECT_SEA_BOARDER_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="BOARDER"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_BOARDER_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SEA_BOARDER_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_CAPTAIN">
+		<event_param chain_event="SELECT_SEA_CAPTAIN_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="CAPTAIN"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SEA_CAPTAIN_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SEA_CAPTAIN_PRICE)"/>
+	</event>
+
+	<event type="GROUP" name="GIVE_RANDOM_GUN">
+		<condition type="CHANCE" percent="35"/>
+		<event_param random_chain_event="1"/>
+		<event_param chain_event="GIVE_LASER_RIFLE"/>
+		<event_param chain_event="GIVE_PLASMA_PISTOL"/>
+	</event>
+	<event type="GROUP" name="GIVE_RANDOM_GUN2">
+		<condition type="CHANCE" percent="15"/>
+		<event_param random_chain_event="1"/>
+		<event_param chain_event="GIVE_PLASMA_RIFLE"/>
+		<event_param chain_event="GIVE_GRENADE"/>
+		<event_param chain_event="GIVE_MINI_ROCKET"/>
+	</event>
+	<event type="MODIFY_MOB" name="GIVE_LASER_RIFLE">
+		<event_param weapon="Laser rifle"/>
+	</event>
+	<event type="MODIFY_MOB" name="GIVE_PLASMA_PISTOL">
+		<event_param weapon="Plasma pistol"/>
+	</event>
+	<event type="MODIFY_MOB" name="GIVE_PLASMA_RIFLE">
+		<event_param weapon="Plasma rifle"/>
+	</event>
+	<event type="MODIFY_MOB" name="GIVE_GRENADE">
+		<event_param weapon="Grenade"/>
+	</event>
+	<event type="MODIFY_MOB" name="GIVE_MINI_ROCKET">
+		<event_param weapon="Mini rocket"/>
+	</event>
+
+	<event type="SPAWN_NPC" name="SPAWN_SINGU_HR">
+		<spawn_npc>
+			<npc_param npc_qty="1"/>
+			<npc_param npc_is_crew="1"/>
+			<npc_param npc_name="Singularity Head HR"/>
+			<npc_param npc_race="HUMAN"/>
+			<npc_param npc_home_system="DOOR_CONTROL"/>
+			<npc_param npc_spawn_at_home="1"/>
+			<npc_param npc_dialogue="HR_AGENT_SINGU"/>
+			<npc_param npc_remote_dialogue="HR_AGENT_SINGU"/>
+			<npc_ai type="NPC_LIFESUPPORT" heal_at_percent="90" oxygen_at_percent="90"/>
+			<npc_ai type="NPC_DEFENDER"/>
+			<npc_ai type="NPC_FIREMAN"/>
+			<npc_ai type="NPC_REPAIRMAN"/>
+			<npc_ai type="NPC_WORKER">
+				<npc_ai_param SYSTEMS="SENSORS:MEDICAL:OXYGEN:DOOR_CONTROL:SHIELDS:REACTOR"/>
+				<npc_ai_param WORK_TIME="44"/>
+			</npc_ai>
+		</spawn_npc>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_ENGINEER">
+		<event_param chain_event="SELECT_SINGU_ENGINEER_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="ENGINEER"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_ENGINEER_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SINGU_ENGINEER_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_SECURITY">
+		<event_param chain_event="SELECT_SINGU_SECURITY_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="SECURITY"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_SECURITY_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SINGU_SECURITY_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_BOARDER">
+		<event_param chain_event="SELECT_SINGU_BOARDER_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="BOARDER"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_BOARDER_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SINGU_BOARDER_PRICE)"/>
+	</event>
+
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_CAPTAIN">
+		<event_param chain_event="SELECT_SINGU_CAPTAIN_PRICE"/>
+		<event_param var_name="[SECTOR]_SEA_SELECTED_TYPE"/>
+		<event_param var_value="CAPTAIN"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="SELECT_SINGU_CAPTAIN_PRICE">
+		<event_param var_name="[SECTOR]_SEA_PRICE"/>
+		<event_param var_value="VAR(SINGU_CAPTAIN_PRICE)"/>
+	</event>
+
+
+</events>

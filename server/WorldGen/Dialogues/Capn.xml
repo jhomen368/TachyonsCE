@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dialogues>
+	<dialogue name="NPC_CAPTAIN" start="M1">
+		<message id="11" text="Collect debris command acknowledged!">
+			<event id="ADD_NPC_CAPTAIN_SCAVENGER_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="12" text="Stop collecting debris command acknowledged!">
+			<event id="REMOVE_NPC_CAPTAIN_SCAVENGER_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="13" text="Going to sector VAR([SHIP_ID]_TARGET_SECTOR).">
+			<event id="NPC_CAPTAIN_TARGET_SECTOR_GET_SHIP" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="14" text="Got it. Guarding VAR([SHIP_ID]_GUARD_TARGET).">
+			<event id="NPC_CAPTAIN_GUARD_TARGET_GET_SHIP" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="M1" text="[ACTION]You see a person in a Spaceship captain uniform.">
+			<event id="NPC_CAPTAIN_GET_SHIP" target="NPC"/>
+			<event id="NPC_CAPTAIN_SAVE_CREW" target="NPC"/>
+			<event id="NPC_CAPTAIN_SAVE_OWNER" target="PLAYER"/>
+			<reply id="1" next="1" text="[SKIP]Stranger[AUTO]">
+				<condition crew="VAR([SECTOR]_NPC_CAPTAIN_CREW)" owner="VAR([SECTOR]_NPC_CAPTAIN_OWNER)" qty="1" ship_id="VAR([SECTOR]_NPC_CAPTAIN_SHIP)" type="SECTOR_SHIPS_ABSENT"/>
+			</reply>
+			<reply id="R4" next="4" text="[SKIP]Owner[AUTO]">
+				<condition crew="VAR([SECTOR]_NPC_CAPTAIN_CREW)" owner="VAR([SECTOR]_NPC_CAPTAIN_OWNER)" qty="1" ship_id="VAR([SECTOR]_NPC_CAPTAIN_SHIP)" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+		</message>
+		<message id="M2" text="What are your orders?">
+			<reply id="1" next="M5" text="Eject all cargo and scrap."/>
+			<reply id="10" next="9" text="Go to a specific sector.">
+				<condition ai_id="NPC_CAPTAIN_SECTOR_FINDER_AI" all_mob_ships="0" type="SHIP_AI_ABSENT"/>
+			</reply>
+			<reply id="11" next="10" text="Stop going to sector VAR([SHIP_ID]_TARGET_SECTOR).">
+				<condition ai_id="NPC_CAPTAIN_SECTOR_FINDER_AI" all_mob_ships="0" type="SHIP_AI_PRESENT"/>
+			</reply>
+			<reply id="12" next="S1" text="Shoot all ships on sight.">
+				<condition ai_id="NPC_CAPTAIN_SENTRY_AI" all_mob_ships="0" type="SHIP_AI_ABSENT"/>
+			</reply>
+			<reply id="13" next="6" text="Stop shooting all ships on sight.">
+				<condition ai_id="NPC_CAPTAIN_SENTRY_AI" all_mob_ships="0" type="SHIP_AI_PRESENT"/>
+			</reply>
+			<reply id="14" next="5" text="You are released from your duties on the ship you are on."/>
+			<reply id="15" next="11" text="Pick up debris.">
+				<condition ai_id="NPC_CAPTAIN_SCAVENGER_AI" all_mob_ships="0" type="SHIP_AI_ABSENT"/>
+			</reply>
+			<reply id="16" next="12" text="Stop Picking up debris.">
+				<condition ai_id="NPC_CAPTAIN_SCAVENGER_AI" all_mob_ships="0" type="SHIP_AI_PRESENT"/>
+			</reply>
+			<reply id="5" next="7" text="Shoot down all asteroids.">
+				<condition ai_id="NPC_CAPTAIN_ASTEROID_HUNTER_AI" all_mob_ships="0" type="SHIP_AI_ABSENT"/>
+			</reply>
+			<reply id="6" next="8" text="Stop shooting asteroids.">
+				<condition ai_id="NPC_CAPTAIN_ASTEROID_HUNTER_AI" all_mob_ships="0" type="SHIP_AI_PRESENT"/>
+			</reply>
+			<reply id="7" next="G1" text="Follow and guard a ship.">
+				<condition ai_id="NPC_CAPTAIN_SHIP_GUARD_AI" all_mob_ships="0" type="SHIP_AI_ABSENT"/>
+			</reply>
+			<reply id="8" next="G3" text="Stop guarding VAR([SHIP_ID]_GUARD_TARGET).">
+				<condition ai_id="NPC_CAPTAIN_SHIP_GUARD_AI" all_mob_ships="0" type="SHIP_AI_PRESENT"/>
+			</reply>
+		</message>
+		<message id="M5" text="Cargo ejected.">
+			<event id="NPC_CAPTAIN_EJECT_ALL" target="NPC"/>
+			<reply id="R1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="G1" text="Please enter the guard target name.">
+			<reply id="R1" next="14" regex="^[a-zA-Z0-9 -']+$" text="[INPUT](Input target ship/station name)"/>
+		</message>
+		<message id="G3" text="Guard duty over.">
+			<event id="REMOVE_NPC_CAPTAIN_SHIP_GUARD_AI" target="NPC"/>
+			<reply id="R1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="1" text="I report only to the owner of the ship I am assigned to. Please do not disturb me.">
+			<event id="NPC_CAPTAIN_CLEAR_VARS" target="PLAYER"/>
+			<reply id="1" text="Ok."/>
+		</message>
+		<message id="2" text="Any new orders Admiral?">
+			<event id="NPC_CAPTAIN_CLEAR_VARS" target="PLAYER"/>
+			<reply id="1" text="Nothing at the moment."/>
+			<reply id="2" next="M2" text="Yes, I have some orders for you.">
+				<condition type="SERVER_VARIABLE_PRESENT" use_passenger_ship="1" var_name="NPC_CAPTAIN_[SHIP_ID]" var_value="[MOB_ID]"/>
+			</reply>
+			<reply id="3" next="3" text="I want you to take charge of the ship you are on.">
+				<condition type="SERVER_VARIABLE_ABSENT" use_passenger_ship="1" var_name="NPC_CAPTAIN_[SHIP_ID]" var_value="[MOB_ID]"/>
+			</reply>
+		</message>
+		<message id="3" text="Acknowledged. Will take good care of her!">
+			<event id="NPC_CAPTAIN_TEMP" target="NPC"/>
+			<event id="ASSIGN_NPC_CAPTAIN_MODIFY_SHIP" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="4" text="Admiral [PLAYER_NAME], [NPC_NAME] reporting!">
+			<reply id="1" next="2" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="5" text="As you wish.">
+			<event id="REMOVE_NPC_CAPTAIN_GET_SHIP" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="6" text="Defensive mode acknowledged.">
+			<event id="REMOVE_NPC_CAPTAIN_SENTRY_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="7" text="Shoot down asteroids, acknowledged!">
+			<event id="ADD_NPC_CAPTAIN_ASTEROID_HUNTER_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="8" text="Leaving asteroids alone.">
+			<event id="REMOVE_NPC_CAPTAIN_ASTEROID_HUNTER_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="9" text="What is our destination?">
+			<reply id="1" next="13" regex="^[0-9:]+$" text="[INPUT](Input target sector X:Y)"/>
+		</message>
+		<message id="S1" text="Hostile mode acknowledged.">
+			<event id="ADD_NPC_CAPTAIN_SENTRY_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+		<message id="10" text="Holding position.">
+			<event id="REMOVE_NPC_CAPTAIN_SECTOR_FINDER_AI" target="NPC"/>
+			<reply id="1" next="2" text="[SKIP]..."/>
+		</message>
+	</dialogue>
+</dialogues>

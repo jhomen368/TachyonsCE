@@ -1,0 +1,10 @@
+name=HBOARDER
+sprite=HUMAN
+health=2500
+oxygen=1800
+no_oxygen_damage=25
+oxygen_consum_speed=4
+weapon=Laser pistol
+repair_power = 1
+fireman_power = 1
+shade=100:30:30

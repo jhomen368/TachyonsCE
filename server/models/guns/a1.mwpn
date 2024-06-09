@@ -1,0 +1,8 @@
+name=Green Laser
+image=glaser
+range=2
+damage=20
+door_damage=30
+system_damage=120
+reload=65
+projectile=glaser

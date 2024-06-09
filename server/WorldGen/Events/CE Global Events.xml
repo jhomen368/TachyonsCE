@@ -7,7 +7,7 @@
 	<event type="MODIFY_SECTOR" name="DO_NOTHING" /> //Important! Don't remove used to give scripts a way to 'do nothing' but still use trigger events
 
 	<event type="SERVER_VARIABLE" name="DF_Defeated_Trigger" var_name="DF_Defeated" var_value="1">
-	<event_param chain_event="Game_Progress_15"></event_param>
+	<event_param chain_event="Game_Progress_15"/>
 	//Modders: Do something with this trigger so that something happens when the D.F Prototype is defeated
 	</event>
 
@@ -33,7 +33,7 @@ Pris_Rescued
 	<event type="SERVER_VARIABLE" name="Game_Progress_11" var_name="Campaign_Progress" var_value="11" /> //Started EMP Cannon Quest (note: this is available immedately after delivering HAK86 crystals)
 	<event type="SERVER_VARIABLE" name="Game_Progress_12" var_name="Campaign_Progress" var_value="12" /> //Got EMP Cannon from A03
 	<event type="SERVER_VARIABLE" name="Game_Progress_13" var_name="Campaign_Progress" var_value="13" /> //Returned to USC with EMP Cannon and got Super Sensors from USC. Starting 2nd mission to KEK
-	<event type="SERVER_VARIABLE" name="Game_Progress_14" var_name="Campaign_Progress" var_value="14" /> //KEK shares last known whereabouts of D.F at Prison
+	<event type="SERVER_VARIABLE" name="Game_Progress_14" var_name="Campaign_Progress" var_value="14" /> //KEK shares last known whereabouts of D.F
 	<event type="SERVER_VARIABLE" name="Game_Progress_15" var_name="Campaign_Progress" var_value="15" /> //The D.F has been defeated
 
 //Optional Quest Progress Tracker

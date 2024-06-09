@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+
+	<event type="SERVER_VARIABLE" name="CONSOLE_TEMP" var_name="CONSOLE_TEMP" var_value="[INPUT]"/>
+	<event type="SERVER_VARIABLE" name="CONSOLE_TEMP2" var_name="CONSOLE_TEMP2" var_value="[INPUT]"/>
+	<event type="SERVER_VARIABLE" name="CONSOLE_TEMP3" var_name="CONSOLE_TEMP3" var_value="[INPUT]"/>
+	<event type="SERVER_VARIABLE" name="CONSOLE_TEMP4" var_name="CONSOLE_TEMP4" var_value="[INPUT]"/>
+	
+	<event type="SERVER_VARIABLE" name="SET_FROM_TEMP" var_name="[INPUT]" var_value="VAR(CONSOLE_TEMP)"/>
+	<event type="SERVER_VARIABLE" name="CLEAR_VAR" var_name="[INPUT]" var_value=""/>
+
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_TP_00" pos="0:0"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_TP_CENTER" pos="7200:7200"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_TP_RANDOM" random_pos="1"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_TAKE_O2" take_oxygen="99999"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_GIVE_O2" give_oxygen="99999"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_KILL" take_health="99999"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_DAMAGE" take_health="200"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_HEAL" give_health="999999"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_TAKE_SCRAP" take_scrap="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_MOB" name="CONSOLE_MOB_GIVE_SCRAP" give_scrap="VAR(CONSOLE_TEMP)"/>
+
+	<event type="MODIFY_SECTOR" name="CONSOLE_SECTOR_TYPE" sector_type="VAR(CONSOLE_TEMP)"/>
+
+	<event type="REMOVE_SHIP" name="CONSOLE_REMOVE_SHIP"/>
+
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_SZ_0" safe_zone="0"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_SZ_1" safe_zone="1"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_NSE_0" no_sector_events="0"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_NSE_1" no_sector_events="1"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_IMMUNE_0">
+		<event_param hull_hazard_immunity="0"/>
+		<event_param emp_hazard_immunity="0"/>
+		<event_param storm_hazard_immunity="0"/>
+		<event_param fire_hazard_immunity="0"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_IMMUNE_1">
+		<event_param hull_hazard_immunity="1"/>
+		<event_param emp_hazard_immunity="1"/>
+		<event_param storm_hazard_immunity="1"/>
+		<event_param fire_hazard_immunity="1"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_REPAIR" repair_breaches="1000" put_out_fires="1000" give_hull="999999">
+		<event_param repair_system_type="PILOTING"/>
+		<event_param repair_system_type="CAPACITOR"/>
+		<event_param repair_system_type="REACTOR"/>
+		<event_param repair_system_type="ENGINES"/>
+		<event_param repair_system_type="HYPERDRIVE"/>
+		<event_param repair_system_type="SHIELDS"/>
+		<event_param repair_system_type="MEDICAL"/>
+		<event_param repair_system_type="DOOR_CONTROL"/>
+		<event_param repair_system_type="LASER_WEAPONS"/>
+		<event_param repair_system_type="MISSILE_WEAPONS"/>
+		<event_param repair_system_type="SENSORS"/>
+		<event_param repair_system_type="WEAPONS_CONTROL"/>
+		<event_param repair_system_type="OXYGEN"/>
+		<event_param repair_system_type="BEAM_WEAPONS"/>
+		<event_param repair_system_type="TELEPORT"/>
+		<event_param repair_system_type="CLOAKING"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_BREAK_SYSTEMS">
+		<event_param break_system_type="PILOTING"/>
+		<event_param break_system_type="CAPACITOR"/>
+		<event_param break_system_type="REACTOR"/>
+		<event_param break_system_type="ENGINES"/>
+		<event_param break_system_type="HYPERDRIVE"/>
+		<event_param break_system_type="SHIELDS"/>
+		<event_param break_system_type="MEDICAL"/>
+		<event_param break_system_type="DOOR_CONTROL"/>
+		<event_param break_system_type="LASER_WEAPONS"/>
+		<event_param break_system_type="MISSILE_WEAPONS"/>
+		<event_param break_system_type="SENSORS"/>
+		<event_param break_system_type="WEAPONS_CONTROL"/>
+		<event_param break_system_type="OXYGEN"/>
+		<event_param break_system_type="BEAM_WEAPONS"/>
+		<event_param break_system_type="TELEPORT"/>
+		<event_param break_system_type="CLOAKING"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TP" pos="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TP_CENTER" pos="7200:7200"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TP_RANDOM" random_pos="1"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_CHARGE">
+		<event_param charge_hd="100"/>
+		<event_param charge_engines="100"/>
+		<event_param charge_weapons="100"/>
+		<event_param charge_cloak="100"/>
+		<event_param charge_system_type="TELEPORT:100"/>
+		<event_param give_shields="99999"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_DECHARGE">
+		<event_param decharge_hd="100"/>
+		<event_param decharge_engines="100"/>
+		<event_param decharge_weapons="100"/>
+		<event_param decharge_cloak="100"/>
+		<event_param decharge_system_type="TELEPORT:100"/>
+		<event_param take_shields="99999"/>
+	</event>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_GIVE_SHIPYARD" add_system_model_to_cargo="SHIPYARD"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TAKE_SCRAP" take_scrap="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_GIVE_SCRAP" give_scrap="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TAKE_HULL" take_hull="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_GIVE_HULL" give_hull="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TAKE_MISSILE" take_missiles="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_GIVE_MISSILE" give_missiles="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_TAKE_DRONE" take_drones="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_GIVE_DRONE" give_drones="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_RESTOCK" restock_traders="1"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_BREAK_DOORS" break_system_type="DOOR_CONTROL"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_ADD_CREW" add_crew="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_REMOVE_CREW" remove_crew="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_SET_OWNER" set_owner="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_HJ" hyper_jump="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_NAME" new_name="VAR(CONSOLE_TEMP)"/>
+	<event type="MODIFY_SHIP" name="CONSOLE_SHIP_CARGO" random_eject_direction="1" eject_all_cargo="1" eject_scrap="999999" eject_missiles="999999" eject_drones="999999"/>
+
+	<event type="PLAY_AUDIO" name="CONSOLE_MUSIC_GLOBAL" track="VAR(CONSOLE_TEMP)" music="1" all_players="1"/>
+	<event type="PLAY_AUDIO" name="CONSOLE_MUSIC_LOCAL" track="VAR(CONSOLE_TEMP)" music="1" sector="[SECTOR]"/>
+	<event type="PLAY_AUDIO" name="CONSOLE_SOUND_GLOBAL" track="VAR(CONSOLE_TEMP)" music="0" all_players="1"/>
+	<event type="PLAY_AUDIO" name="CONSOLE_SOUND_LOCAL" track="VAR(CONSOLE_TEMP)" music="0" sector="[SECTOR]"/>
+	
+</events>

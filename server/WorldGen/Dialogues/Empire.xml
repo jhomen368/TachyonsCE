@@ -163,7 +163,7 @@
 				</condition>			
 			</reply>
 		</message>
-		<message id="M17_1" text="The Scorchers' base is at sector [SECTOR]">
+		<message id="M17_1" text="The Scorchers' base is at sector VAR(S_HQ_SECTOR)">
 			<event id="SPAWN_S_HQ" target="PLAYER"></event>
 			<event id="MAKE_S_HQ_SECTOR_EXPLORED" target="PLAYER"></event>
 			<event id="Game_Progress_7" target="PLAYER"></event>

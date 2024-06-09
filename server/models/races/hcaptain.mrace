@@ -1,0 +1,10 @@
+name=HCAPTAIN
+sprite=HUMAN
+health=3400
+oxygen=2500
+no_oxygen_damage=20
+oxygen_consum_speed=4
+weapon=Laser pistol
+repair_power = 1
+fireman_power = 1
+shade=80:80:100

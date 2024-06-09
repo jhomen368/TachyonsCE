@@ -1,0 +1,8 @@
+name=X-Ray Laser
+image=xlaser
+range=4
+damage=15
+door_damage=10
+system_damage=65
+reload=25
+projectile=xlaser

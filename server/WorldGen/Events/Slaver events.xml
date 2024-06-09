@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <events>
 	<event type="SPAWN_SHIP" name="SPAWN_B_SLAVER">
-		<event_param chain_events_to_created_by_children="1"></event_param>
-		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT"></event_param>
-		<event_param chain_event="SET_FLEET_MOD_0"></event_param>
-		<event_param chain_event="SPAWN_B_CARGO"></event_param>
-		<event_param chain_event="ADD_SLAVER_AND_SLAVES"></event_param>
-		<event_param chain_event="GIVE_SLAVER_AI"></event_param>
+		<event_param chain_events_to_created_by_children="1"/>
+		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT"/>
+		<event_param chain_event="SET_FLEET_MOD_0"/>
+		<event_param chain_event="SPAWN_B_CARGO"/>
+		<event_param chain_event="ADD_SLAVER_AND_SLAVES"/>
+		<event_param chain_event="GIVE_SLAVER_AI"/>
 	</event>
 
 	<event type="SPAWN_SHIP" name="SPAWN_B_SLAVER_GUARD1">
-		<event_param chain_events_to_created_by_children="1"></event_param>
-		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT2"></event_param>
-		<event_param chain_event="SET_FLEET_MOD_0"></event_param>
-		<event_param chain_event="SPAWN_B_SCOUT"></event_param>
-		<event_param chain_event="GIVE_SLAVER_GUARD_AI"></event_param>
+		<event_param chain_events_to_created_by_children="1"/>
+		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT2"/>
+		<event_param chain_event="SET_FLEET_MOD_0"/>
+		<event_param chain_event="SPAWN_B_SCOUT"/>
+		<event_param chain_event="GIVE_SLAVER_GUARD_AI"/>
 	</event>
 	<event type="SPAWN_SHIP" name="SPAWN_B_SLAVER_GUARD2">
-		<event_param chain_events_to_created_by_children="1"></event_param>
-		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT2"></event_param>
-		<event_param chain_event="SET_FLEET_MOD_0"></event_param>
-		<event_param chain_event="SPAWN_B_SCOUT"></event_param>
-		<event_param chain_event="GIVE_SLAVER_ESCORT_AI"></event_param>
+		<event_param chain_events_to_created_by_children="1"/>
+		<event_param chain_event="RANDOM_SHIP_LEVEL_SECTOR_THREAT2"/>
+		<event_param chain_event="SET_FLEET_MOD_0"/>
+		<event_param chain_event="SPAWN_B_SCOUT"/>
+		<event_param chain_event="GIVE_SLAVER_ESCORT_AI"/>
 	</event>
 	
-	<event type="SERVER_VARIABLE" name="SECTOR_SLAVER_PROVOKED">
-		<event_param nonstop="1"></event_param>
-		<event_param var_name="[SECTOR] SLAVER_PROVOKED"></event_param>
-		<event_param var_value="1"></event_param>
-	</event>
+	<event type="SERVER_VARIABLE" name="SECTOR_SLAVER_PROVOKED" var_name="[SECTOR] SLAVER_PROVOKED" var_value="1"/>
+	
+	<event type="SERVER_VARIABLE" name="CLEAR_SECTOR_SLAVER_PROVOKED" var_name="[SECTOR] SLAVER_PROVOKED" var_value=""/>
 	
 	<event type="SERVER_VARIABLE" name="SECTOR_SLAVES_SOLD">
-		<event_param nonstop="1"></event_param>
-		<event_param var_name="[SECTOR] [MOB_ID] SLAVES_SOLD"></event_param>
-		<event_param var_value="++"></event_param>
+		<event_param nonstop="1"/>
+		<event_param var_name="[SECTOR] SLAVES_SOLD"/>
+		<event_param var_value="++"/>
+	</event>
+	
+	<event type="SERVER_VARIABLE" name="CLEAR_SECTOR_SLAVES_SOLD">
+		<event_param nonstop="1"/>
+		<event_param var_name="[SECTOR] SLAVES_SOLD"/>
+		<event_param var_value=""/>
 	</event>
 	
 	<event type="MODIFY_SHIP" name="REMOVE_SLAVE_PRICE_FROM_PLAYER">
-		<event_param all_mob_ships="0"></event_param>
-		<event_param take_scrap="300"></event_param>
+		<event_param all_mob_ships="0"/>
+		<event_param take_scrap="300"/>
 	</event>
 	
 	<event type="MODIFY_SHIP" name="ADD_SLAVE_PRICE_TO_SLAVER">
-		<event_param all_mob_ships="0"></event_param>
-		<event_param give_scrap="300"></event_param>
+		<event_param all_mob_ships="0"/>
+		<event_param give_scrap="300"/>
 	</event>	
 
 	<event type="SPAWN_NPC" name="SPAWN_WORKER_ON_SHIP">
-		<event_param nonstop="1"></event_param>
-		<event_param random_npc="0"></event_param>
+		<event_param nonstop="1"/>
+		<event_param random_npc="0"/>
 		<spawn_npc>
 			<npc_param npc_qty="1"></npc_param>
 			<npc_param npc_is_crew="1"></npc_param>
@@ -65,9 +69,9 @@
 	</event>
 	
 	<event type="MODIFY_SHIP" name="GIVE_SLAVER_GUARD_AI">
-		<event_param clear_created_by_children="1"></event_param>
-		<event_param remove_ship_ai_type="SENTRY"></event_param>
-		<event_param new_name="Slaver guard ship"></event_param>
+		<event_param clear_created_by_children="1"/>
+		<event_param remove_ship_ai_type="SENTRY"/>
+		<event_param new_name="Slaver guard ship"/>
 		<ship_ai type="SHIP_GUARD">
 			<ship_ai_param GNAME="Slaver transport ship"></ship_ai_param>				
 		</ship_ai>
@@ -76,9 +80,9 @@
 		</ship_ai>
 	</event>
 	<event type="MODIFY_SHIP" name="GIVE_SLAVER_ESCORT_AI">
-		<event_param clear_created_by_children="1"></event_param>
-		<event_param remove_ship_ai_type="SENTRY"></event_param>
-		<event_param new_name="Slaver escort ship"></event_param>
+		<event_param clear_created_by_children="1"/>
+		<event_param remove_ship_ai_type="SENTRY"/>
+		<event_param new_name="Slaver escort ship"/>
 		<ship_ai type="SHIP_GUARD">
 			<ship_ai_param GNAME="Slaver transport ship"></ship_ai_param>				
 		</ship_ai>
@@ -87,9 +91,11 @@
 		</ship_ai>
 	</event>
 	<event type="MODIFY_SHIP" name="GIVE_SLAVER_AI">
-		<event_param clear_created_by_children="1"></event_param>
-		<event_param remove_ship_ai_type="SENTRY"></event_param>
-		<event_param new_name="Slaver transport ship"></event_param>
+		<event_param clear_created_by_children="1"/>
+		<event_param remove_ship_ai_type="SENTRY"/>
+		<event_param new_name="Slaver transport ship"/>
+		<event_param death_event="CLEAR_SECTOR_SLAVER_PROVOKED"/>
+		<event_param death_event="CLEAR_SECTOR_SLAVES_SOLD"/>
 		<ship_ai type="ENEMY_SHOOTER"/>
 		<ship_ai type="SENTRY">
 			<ship_ai_condition type="SERVER_VARIABLE_PRESENT">
@@ -103,11 +109,11 @@
 		<ship_ai type="SHIP_GUARD">
 			<ship_ai_param GNAME="Slaver escort ship"></ship_ai_param>				
 		</ship_ai>
-		<event_param install_system_model="MEDICAL3"></event_param>
+		<event_param install_system_model="MEDICAL3"/>
 	</event>
 
 	<event type="SPAWN_NPC" name="ADD_SLAVER_AND_SLAVES">
-		<event_param nonstop="1"></event_param>
+		<event_param nonstop="1"/>
 		<spawn_npc>
 			<npc_param npc_qty="1"></npc_param>
 			<npc_param npc_is_crew="1"></npc_param>

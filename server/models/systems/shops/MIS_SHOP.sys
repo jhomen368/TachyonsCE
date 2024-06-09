@@ -1,5 +1,5 @@
 TYPE=CONSUMABLES_SHOP
-NAME=Big Missiles shop
+NAME=Missiles shop
 HP=10000
 MINHP=1
 FIX=10

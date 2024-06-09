@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<events>
+	
+	<event type="GROUP" name="NPC_CAPTAIN_CLEANUP_VARS">
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_VAR"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_TARGET_SECTOR_VAR"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_GUARD_TARGET_VAR"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="REMOVE_NPC_CAPTAIN_VAR" var_name="NPC_CAPTAIN_[SHIP_ID]" var_value=""/>
+
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_AIS_AND_EVENTS">
+		<event_param remove_death_event="NPC_CAPTAIN_CLEANUP_VARS"/>
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_CLEANUP_AI"/>
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_ENEMY_SHOOTER_AI"/>
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_EVADER_AI"/>
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_LIFE_SUPPORT_AI"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_SENTRY_AI"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_ASTEROID_HUNTER_AI"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_SCAVENGER_AI"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_SECTOR_FINDER_AI"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_SHIP_GUARD_AI"/>
+	</event>
+
+	<event type="MODIFY_SHIP" name="ADD_NPC_CAPTAIN_SENTRY_AI">
+		<ship_ai type="SENTRY" ignore_unowned="0" ai_id="NPC_CAPTAIN_SENTRY_AI"/>
+	</event>
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_SENTRY_AI">
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_SENTRY_AI"/>
+	</event>
+
+	<event type="MODIFY_SHIP" name="ADD_NPC_CAPTAIN_ASTEROID_HUNTER_AI">
+		<ship_ai type="SHIP_CLASS_HUNTER" TARGET="ASTEROID" ai_id="NPC_CAPTAIN_ASTEROID_HUNTER_AI"/>
+	</event>
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_ASTEROID_HUNTER_AI">
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_ASTEROID_HUNTER_AI"/>
+	</event>
+
+	<event type="MODIFY_SHIP" name="ADD_NPC_CAPTAIN_SCAVENGER_AI">
+		<ship_ai type="SCAVENGER" ai_id="NPC_CAPTAIN_SCAVENGER_AI"/>
+	</event>
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_SCAVENGER_AI">
+		<event_param remove_ship_ai_id="NPC_CAPTAIN_SCAVENGER_AI"/>
+	</event>
+
+	<event type="MODIFY_SHIP" name="ADD_NPC_CAPTAIN_SECTOR_FINDER_AI" chain_event="REMOVE_NPC_CAPTAIN_SHIP_GUARD_AI">
+		<ship_ai type="SECTOR_FINDER" ai_id="NPC_CAPTAIN_SECTOR_FINDER_AI" TARGET="VAR([SHIP_ID]_TARGET_SECTOR)"/>
+	</event>
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_SECTOR_FINDER_AI" remove_ship_ai_id="NPC_CAPTAIN_SECTOR_FINDER_AI" chain_event="REMOVE_NPC_CAPTAIN_TARGET_SECTOR_VAR"/>
+	<event type="MODIFY_SHIP" name="NPC_CAPTAIN_TARGET_SECTOR_GET_SHIP" all_mob_ships="0" ignore_passenger_access="1" chain_events_to_modified="1">
+		<event_param chain_event="NPC_CAPTAIN_TARGET_SECTOR_VAR"/>
+		<event_param chain_event="ADD_NPC_CAPTAIN_SECTOR_FINDER_AI"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_TARGET_SECTOR_VAR" var_name="[SHIP_ID]_TARGET_SECTOR" var_value="[INPUT]"/>
+	<event type="SERVER_VARIABLE" name="REMOVE_NPC_CAPTAIN_TARGET_SECTOR_VAR" var_name="[SHIP_ID]_TARGET_SECTOR" var_value=""/>
+
+	<event type="MODIFY_SHIP" name="ADD_NPC_CAPTAIN_SHIP_GUARD_AI" chain_event="REMOVE_NPC_CAPTAIN_SECTOR_FINDER_AI">
+		<ship_ai type="SHIP_GUARD" ai_id="NPC_CAPTAIN_SHIP_GUARD_AI" GNAME="VAR([SHIP_ID]_GUARD_TARGET)"/>
+	</event>
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_SHIP_GUARD_AI" remove_ship_ai_id="NPC_CAPTAIN_SHIP_GUARD_AI" chain_event="REMOVE_NPC_CAPTAIN_GUARD_TARGET_VAR"/>
+	<event type="MODIFY_SHIP" name="NPC_CAPTAIN_GUARD_TARGET_GET_SHIP" all_mob_ships="0" ignore_passenger_access="1" chain_events_to_modified="1">
+		<event_param chain_event="NPC_CAPTAIN_GUARD_TARGET_VAR"/>
+		<event_param chain_event="ADD_NPC_CAPTAIN_SHIP_GUARD_AI"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_GUARD_TARGET_VAR" var_name="[SHIP_ID]_GUARD_TARGET" var_value="[INPUT]"/>
+	<event type="SERVER_VARIABLE" name="REMOVE_NPC_CAPTAIN_GUARD_TARGET_VAR" var_name="[SHIP_ID]_GUARD_TARGET" var_value=""/>
+
+	<event type="MODIFY_SHIP" name="NPC_CAPTAIN_EJECT_ALL" all_mob_ships="0" random_eject_direction="1"
+	eject_all_cargo="1" eject_scrap="99999999" eject_drones="99999999" eject_missiles="99999999"/>
+
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_TEMP" var_name="NPC_CAPTAIN_TEMP" var_value="[MOB_ID]"/>
+	<event type="MODIFY_SHIP" name="ASSIGN_NPC_CAPTAIN_MODIFY_SHIP" all_mob_ships="0" ignore_passenger_access="1" chain_event="ASSIGN_NPC_CAPTAIN_VAR" chain_events_to_modified="1">
+		<ship_ai type="EVENT_TRIGGER" TIMER="11" ai_id="NPC_CAPTAIN_CLEANUP_AI">
+			<ship_ai_condition type="SHIP_PASSENGER_ABSENT" id="VAR(NPC_CAPTAIN_[SHIP_ID])" is_crew="1"/>
+			<ship_ai_param EVENT="REMOVE_NPC_CAPTAIN_AIS_AND_EVENTS"/>
+			<ship_ai_param EVENT="NPC_CAPTAIN_CLEANUP_VARS"/>
+		</ship_ai>
+		<ship_ai type="ENEMY_SHOOTER" ai_id="NPC_CAPTAIN_ENEMY_SHOOTER_AI"/>
+		<ship_ai type="EVADER" ai_id="NPC_CAPTAIN_EVADER_AI"/>
+		<ship_ai type="LIFE_SUPPORT" ai_id="NPC_CAPTAIN_LIFE_SUPPORT_AI"/>
+		<event_param death_event="NPC_CAPTAIN_CLEANUP_VARS"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="ASSIGN_NPC_CAPTAIN_VAR" var_name="NPC_CAPTAIN_[SHIP_ID]" var_value="VAR(NPC_CAPTAIN_TEMP)"/>
+
+	<event type="MODIFY_SHIP" name="REMOVE_NPC_CAPTAIN_GET_SHIP" all_mob_ships="0" ignore_passenger_access="1" chain_events_to_modified="1">
+		<event_param chain_event="NPC_CAPTAIN_CLEANUP_VARS"/>
+		<event_param chain_event="REMOVE_NPC_CAPTAIN_AIS_AND_EVENTS"/>
+	</event>
+
+	<event type="MODIFY_SHIP" name="NPC_CAPTAIN_GET_SHIP" all_mob_ships="0" ignore_passenger_access="1" chain_event="NPC_CAPTAIN_SAVE_SHIP" chain_events_to_modified="1"/>	
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_SAVE_SHIP" var_name="[SECTOR]_NPC_CAPTAIN_SHIP" var_value="[SHIP_ID]"/>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_SAVE_CREW" var_name="[SECTOR]_NPC_CAPTAIN_CREW" var_value="[MOB_NAME]"/>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_SAVE_OWNER" var_name="[SECTOR]_NPC_CAPTAIN_OWNER" var_value="[MOB_NAME]"/>
+
+	<event type="GROUP" name="NPC_CAPTAIN_CLEAR_VARS">
+		<event_param chain_event="NPC_CAPTAIN_CLEAR_SHIP"/>
+		<event_param chain_event="NPC_CAPTAIN_CLEAR_CREW"/>
+		<event_param chain_event="NPC_CAPTAIN_CLEAR_OWNER"/>
+	</event>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_CLEAR_SHIP" var_name="[SECTOR]_NPC_CAPTAIN_SHIP" var_value=""/>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_CLEAR_CREW" var_name="[SECTOR]_NPC_CAPTAIN_CREW" var_value=""/>
+	<event type="SERVER_VARIABLE" name="NPC_CAPTAIN_CLEAR_OWNER" var_name="[SECTOR]_NPC_CAPTAIN_OWNER" var_value=""/>
+
+</events>

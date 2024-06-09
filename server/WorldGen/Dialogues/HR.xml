@@ -1,59 +1,267 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dialogues>
-	<dialogue name="HR_AGENT">
-		<start>M0</start>
-		<message id="M0" text="[ACTION]A busy man reading some data sheets.">
-			<reply id="R1" text="[SKIP][AUTO]" next="M1"></reply>
+	<dialogue name="HR_AGENT" start="M0">
+		<message id="M0" text="[ACTION]You see a busy person reading some data sheets.">
+			<reply id="R1" next="M1" text="[SKIP]...[AUTO]"/>
 		</message>
-
-		<message id="M1" text="Greetings! Welcome to the Space Engineering Agency!">
-			<reply id="R1" text="[SKIP][AUTO]" next="M2"></reply>
+		<message id="M1" text="Greetings! I am a representative of the Space Employment Agency!">
+			<reply id="R1" next="M2" text="[SKIP]...[AUTO]"/>
 		</message>
-
-		<message id="M3" text="Unfortunately, all the employees we had at this station are already hired.">
-			<reply id="R1" text="[SKIP][AUTO]" next="M4"></reply>
-		</message>
-		<message id="M4" text="Try checking on another trading station, we have offices in most of them.">
-			<reply id="R1" text="Thank you."></reply>
-		</message>
-			
 		<message id="M2" text="My name is [NPC_NAME]. How can I help you?">
-			<reply id="R1" text="Hello. I would like to hire an engineer." next="M5">
-				<condition type="SERVER_VARIABLE_SMALLER">
-					<condition_param var_name="[SECTOR] SLAVES_SOLD"></condition_param>
-					<condition_param var_value="3"></condition_param>
-				</condition>
+			<reply id="R1" next="1" text="Hello. I would like to hire some crew.">
+				<condition type="SERVER_VARIABLE_SMALLER" var_name="[SECTOR] SLAVES_SOLD" var_value="VAR(MAX_SEA_STOCK)"/>
 			</reply>
-			<reply id="R2" text="Hello. I would like to hire an engineer." next="M3">
-				<condition type="SERVER_VARIABLE_BIGGER">
-					<condition_param var_name="[SECTOR] SLAVES_SOLD"></condition_param>
-					<condition_param var_value="2"></condition_param>
-				</condition>
+			<reply id="R2" next="M3" text="Hello. I would like to hire some crew.">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR] SLAVES_SOLD" var_value="VAR(MAX_SEA_STOCK)"/>
 			</reply>
 		</message>
-		
-		<message id="M5" text="Excellent! I think I can find someone that will suit you. The contract price is 300.">
-			<reply id="R1" text="[SKIP]Transfer 300 scrap." next="M7">
-				<condition type="SHIP_SCRAP_PRESENT">
-					<condition_param target_player="1"></condition_param>
-					<condition_param qty="300"></condition_param>
-				</condition>
+		<message id="M3" text="Unfortunately, all employees we had prepared are already hired.">
+			<reply id="R1" next="M4" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="M4" text="Try checking with another S.E.A. representative.">
+			<reply id="R1" text="Thank you."/>
+		</message>
+		<message id="M5" text="That would be [VAR([SECTOR]_SEA_PRICE)]">
+			<reply id="1" next="6" text="Actually I changed my mind."/>
+			<reply id="2" next="D7" text="OK.">
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
 			</reply>
-			<reply id="R2" text="I don't have that much right now. I will get back to you later." next="M6">
-				<condition type="SHIP_SCRAP_ABSENT">
-					<condition_param target_player="1"></condition_param>
-					<condition_param qty="300"></condition_param>
-				</condition>
+			<reply id="3" text="I don't have that much right now. I will get back to you later.">
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_ABSENT"/>
 			</reply>
 		</message>
-		
-		<message id="M6" text="Have a nice day."></message>
-
-		<message id="M7" text="Thank you. Your new engineer is on his way to your ship.">
-			<event id="REMOVE_SLAVE_PRICE_FROM_PLAYER" target="PLAYER"></event>
-			<event id="SPAWN_WORKER_ON_SHIP" target="PLAYER"></event>
-			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"></event>
+		<message id="10" text="A Captain, alright.">
+			<event id="SELECT_SEA_CAPTAIN" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
 		</message>
-		
+		<message id="11" text="Repair droid [VAR(SEA_REPAIR_PRICE)] scrap.(Can't fight boarders)">
+			<reply id="1" next="3" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="12" text="A Repair droid, alright.">
+			<event id="SELECT_SEA_REPAIR" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D10" text="Thank you. Your new Boarder is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_BOARDER" target="PLAYER"/>
+			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="13" text="Thank you. Your new Repair droid is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_REPAIR" target="PLAYER"/>
+			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="D11" text="Thank you. Your new Captain is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_CAPTAIN" target="PLAYER"/>
+			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="D2" text="Either there's no such ship, or you don't have the scrap.">
+			<reply id="R6" next="D7" text="[SKIP]..."/>
+		</message>
+		<message id="D4" text="One second please...">
+			<event id="INPUT_ShipName" target="PLAYER"/>
+			<reply any_condition="1" id="0" next="D2" text="[SKIP]NO GO[AUTO]">
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_ABSENT"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_ABSENT"/>
+			</reply>
+			<reply id="1" next="D8" text="[SKIP]ENGINEER[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="ENGINEER"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="2" next="D9" text="[SKIP]SECURITY[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="SECURITY"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="3" next="D10" text="[SKIP]BOARDER[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="BOARDER"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="4" next="D11" text="[SKIP]Captain[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="CAPTAIN"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="5" next="13" text="[SKIP]Repair droid[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="REPAIR"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+		</message>
+		<message id="1" text="Excellent! We have different crew for hire:">
+			<reply id="1" next="2" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="2" text="Engineer [VAR(SEA_ENGINEER_PRICE)] scrap.">
+			<reply id="1" next="11" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="3" text="Security [VAR(SEA_SECURITY_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="4" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D7" text="Please, input your ship's name.">
+			<reply id="R4" next="D4" regex="^[a-zA-Z0-9 -']+$" text="[INPUT](Input ship name)"/>
+		</message>
+		<message id="4" text="Boarder [VAR(SEA_BOARDER_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="5" text="[SKIP]...[AUTO]">
+				<condition any_value="1" target_player="1" type="SERVER_VARIABLE_PRESENT" var_name="NEW_THREAT" var_value=""/>
+			</reply>
+			<reply id="2" next="6" text="[SKIP]...[AUTO]">
+				<condition any_value="1" target_player="1" type="SERVER_VARIABLE_ABSENT" var_name="NEW_THREAT" var_value=""/>
+			</reply>
+		</message>
+		<message id="D8" text="Thank you. Your new Engineer is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_ENGINEER" target="PLAYER"/>
+			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="5" text="Captain [VAR(SEA_CAPTAIN_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="6" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D9" text="Thank you. Your new Security guard is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_SECURITY" target="PLAYER"/>
+			<event id="SECTOR_SLAVES_SOLD" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="6" text="Which one would you like to hire?">
+			<reply id="1" next="7" text="Engineer"/>
+			<reply id="2" next="8" text="Security"/>
+			<reply id="3" next="9" text="Boarder"/>
+			<reply id="4" next="10" text="Captain">
+				<condition any_value="1" target_player="1" type="SERVER_VARIABLE_PRESENT" var_name="NEW_THREAT" var_value=""/>
+			</reply>
+			<reply id="5" next="12" text="Repair droid"/>
+			<reply id="6" text="None at the moment"/>
+		</message>
+		<message id="7" text="An Engineer, alright.">
+			<event id="SELECT_SEA_ENGINEER" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="8" text="A Security guard, alright.">
+			<event id="SELECT_SEA_SECURITY" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="9" text="A Boarder, alright.">
+			<event id="SELECT_SEA_BOARDER" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+	</dialogue>
+	<dialogue name="HR_AGENT_SINGU" start="M0">
+		<message id="D10" text="Thank you. Your new Boarder is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_BOARDER" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="M0" text="[ACTION]You see a busy person filling some data sheets.">
+			<reply id="R1" next="M1" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="M1" text="I am the head of the HR department on Singularity station.">
+			<reply id="R1" next="M2" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="M2" text="How can I help you?">
+			<reply id="R1" next="1" text="Hello. I would like to hire some crew."/>
+			<reply id="R2" text="Another time."/>
+		</message>
+		<message id="D11" text="Thank you. Your new Captain is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_CAPTAIN" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="M5" text="That would be [VAR([SECTOR]_SEA_PRICE)]">
+			<reply id="1" next="6" text="Actually I changed my mind."/>
+			<reply id="2" next="D7" text="OK.">
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+			</reply>
+			<reply id="3" text="I don't have that much right now. I will get back to you later.">
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_ABSENT"/>
+			</reply>
+		</message>
+		<message id="D2" text="Either there's no such ship, or you don't have the scrap.">
+			<reply id="R6" next="D7" text="[SKIP]..."/>
+		</message>
+		<message id="D4" text="One second please...">
+			<event id="INPUT_ShipName" target="PLAYER"/>
+			<reply any_condition="1" id="0" next="D2" text="[SKIP]...[AUTO]">
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_ABSENT"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_ABSENT"/>
+			</reply>
+			<reply id="1" next="D8" text="[SKIP]...[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="ENGINEER"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="2" next="D9" text="[SKIP]...[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="SECURITY"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="3" next="D10" text="[SKIP]...[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="BOARDER"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+			<reply id="4" next="D11" text="[SKIP]...[AUTO]">
+				<condition type="SERVER_VARIABLE_PRESENT" var_name="[SECTOR]_SEA_SELECTED_TYPE" var_value="CAPTAIN"/>
+				<condition qty="VAR([SECTOR]_SEA_PRICE)" target_player="1" type="MOB_SCRAP_PRESENT"/>
+				<condition owner="[PLAYER_NAME]" qty="1" ship_name="VAR([PLAYER_NAME]_input_ship_name)" target_player="1" type="SECTOR_SHIPS_PRESENT"/>
+			</reply>
+		</message>
+		<message id="1" text="Alright, I think I can find someone for you. Who exactly do you need?">
+			<reply id="1" next="2" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="2" text="Engineer [VAR(SINGU_ENGINEER_PRICE)] scrap.">
+			<reply id="1" next="3" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="3" text="Security [VAR(SINGU_SECURITY_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="4" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D7" text="Please, input your ship's name.">
+			<reply id="R4" next="D4" regex="^[a-zA-Z0-9 -']+$" text="[INPUT](Input ship name)"/>
+		</message>
+		<message id="4" text="Boarder [VAR(SINGU_BOARDER_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D8" text="Thank you. Your new Engineer is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_ENGINEER" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="5" text="Captain [VAR(SINGU_CAPTAIN_PRICE)] scrap. (Can't do repairs)">
+			<reply id="1" next="6" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="D9" text="Thank you. Your new Security guard is on their way to your ship.">
+			<event id="TAKE_SCRAP_FOR_SEA" target="PLAYER"/>
+			<event id="SPAWN_SEA_SECURITY" target="PLAYER"/>
+			<reply id="1" text="Thanks."/>
+		</message>
+		<message id="6" text="Which one would you like to hire?">
+			<reply id="1" next="7" text="Engineer"/>
+			<reply id="2" next="8" text="Security"/>
+			<reply id="3" next="9" text="Boarder"/>
+			<reply id="4" next="10" text="Captain"/>
+			<reply id="5" text="None at the moment."/>
+		</message>
+		<message id="7" text="An Engineer, alright.">
+			<event id="SELECT_SINGU_ENGINEER" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="8" text="A Security guard, alright.">
+			<event id="SELECT_SINGU_SECURITY" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="9" text="A Boarder, alright.">
+			<event id="SELECT_SINGU_BOARDER" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
+		<message id="10" text="A Captain, alright.">
+			<event id="SELECT_SINGU_CAPTAIN" target="PLAYER"/>
+			<reply id="1" next="M5" text="[SKIP]...[AUTO]"/>
+		</message>
 	</dialogue>
 </dialogues>

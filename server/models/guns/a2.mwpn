@@ -1,0 +1,8 @@
+name=Red Laser
+image=rlaser
+range=2
+damage=20
+door_damage=20
+system_damage=150
+reload=60
+projectile=rlaser

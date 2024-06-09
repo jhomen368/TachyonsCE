@@ -1,0 +1,8 @@
+name=Gamma Laser
+image=galaser
+range=5
+damage=80
+door_damage=80
+system_damage=300
+reload=130
+projectile=galaser
